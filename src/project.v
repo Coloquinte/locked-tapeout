@@ -16,7 +16,7 @@ module tt_um_coloquinte_moosic (
     input  wire       rst_n
 );
 
-  localparam KEY_SIZE = 4;
+  localparam KEY_SIZE = 6;
 
   wire do_incr = ui_in[0];
   wire load_key = ui_in[1];
@@ -34,6 +34,6 @@ module tt_um_coloquinte_moosic (
 	  end
   end
 
-  locked_counter c(.do_incr(do_incr),.data_out(uo_out),.clk(clk),.rst_n(rst_n),.moosic_key(key));
+  counter c(.do_incr(do_incr),.data_out(uo_out),.clk(clk),.rst_n(rst_n),.moosic_key(key));
 
 endmodule
