@@ -21,12 +21,16 @@ module tt_um_coloquinte_moosic (
   wire [31:0] data_out;
 
   genvar i;
-  for (i=0 i<4; i=i+1) {
-    assign data_in[8*i+8:8*i] = ui_in;
-  }
-  for (i=0 i<8; i=i+1) {
-    assign key_in[8*i+8:8*i] = ui_in;
-  }
+  generate
+  for (i=0; i<4; i=i+1) begin
+    assign data_in[8*i+7:8*i] = ui_in;
+  end
+  endgenerate
+  generate
+  for (i=0; i<8; i=i+1) begin
+    assign key_in[8*i+7:8*i] = ui_in;
+  end
+  endgenerate
   assign uo_out = data_out[7:0];
 
   wire done;
