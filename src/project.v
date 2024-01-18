@@ -20,7 +20,7 @@ module tt_um_coloquinte_moosic (
 
   wire do_incr = ui_in[0];
   wire load_key = ui_in[1];
-  wire key_data = ui_in[KEY_SIZE+1:2];
+  wire [KEY_SIZE-1:0] key_data = ui_in[KEY_SIZE+1:2];
   assign uio_out = 0;
   assign uio_oe = 0;
 
