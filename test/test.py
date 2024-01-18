@@ -22,6 +22,12 @@ async def test_adder(dut):
   await ClockCycles(dut.clk, 10)
   dut.rst_n.value = 1
 
+  # Set the key
+  # 39 in hexa, and two bit of control
+  # 11 1001 10 => 0xe6
+  dut.ui_in_value = 0xe6
+  await ClockCycles(dut.clk, 10)
+
   # Set the input values, wait one clock cycle, and check the output
   dut._log.info("Test")
   dut.ui_in.value = 1
