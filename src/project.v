@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2023 Your Name
+ * Copyright (c) 2024 Gabriel Gouvine
  * SPDX-License-Identifier: Apache-2.0
  */
 
 `define default_netname none
 
-module tt_um_example (
+module tt_um_coloquinte_simon (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -16,9 +16,11 @@ module tt_um_example (
     input  wire       rst_n
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  wire [63:0] key_in;
+  wire [31:0] data_in;
+  wire [31:0] data_out;
 
+  wire done;
+
+  simon #(.n(32),.m(2)) cipher (.clk(clk),.rst(!rst_n),.plaintext(data_in),.key(key_in),.ciphertext(data_out),.en(1'b1), .done(done));
 endmodule
