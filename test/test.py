@@ -37,3 +37,18 @@ async def test_adder(dut):
     print("Value at cycle {}: {}".format(i, dut.uo_out.value))
     await ClockCycles(dut.clk, 1)
     assert dut.uo_out.value == i
+
+  # Set the wrong key
+  dut.ui_in.value = 0xaa
+  await ClockCycles(dut.clk, 10)
+
+  # Set the input values, wait one clock cycle, and check the output
+  dut._log.info("Test")
+  dut.ui_in.value = 1
+  dut.uio_in.value = 0
+
+  for i in range(3):
+    print("Value at cycle {}: {}".format(i, dut.uo_out.value))
+    await ClockCycles(dut.clk, 1)
+    # Test that this is always wrong. Of course there could be collisions
+    assert dut.uo_out.value != i
