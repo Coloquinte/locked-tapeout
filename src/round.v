@@ -1,6 +1,5 @@
-`timescale 1ns / 1ps
 /*
-Copyright © 2020 Ali Shuja Siddiqui <asiddiq6@uncc.edu>
+Copyright 2020 Ali Shuja Siddiqui <asiddiq6@uncc.edu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in the 
