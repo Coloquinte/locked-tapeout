@@ -37,9 +37,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "utility.vh"
 
-module round #(parameter n=`N, m=`M)
+module round #(parameter n=32, m=2)
     (x, k, y);
     input [(2*n)-1:0] x;
     input [(n-1):0] k;

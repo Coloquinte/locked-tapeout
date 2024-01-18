@@ -38,9 +38,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "utility.vh"
 
-module simon #(parameter n=`N, m=`M)
+module simon #(parameter n=32, m=2)
 (clk, rst, plaintext, key, ciphertext, en, done);
     input clk, rst, en;
     input [2*n-1:0] plaintext;

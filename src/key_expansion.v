@@ -38,8 +38,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "utility.vh"
-module key_expansion #(parameter n=`N, m=`M)(
+module key_expansion #(parameter n=32, m=2)(
     input [n*m-1:0] key,
     input [6:0] i, //denotes current round 
     output reg [n-1:0] key_i
