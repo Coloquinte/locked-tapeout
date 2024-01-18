@@ -27,8 +27,7 @@ async def test_adder(dut):
   dut.ui_in.value = 1
   dut.uio_in.value = 0
 
-  await ClockCycles(dut.clk, 1)
-  assert dut.uo_out.value == 1
-
-  await ClockCycles(dut.clk, 1)
-  assert dut.uo_out.value == 2
+  for i in range(10):
+    print("Value at cycle {}: {}".format(i, dut.uo_out.value))
+    await ClockCycles(dut.clk, 1)
+    assert dut.uo_out.value == i
