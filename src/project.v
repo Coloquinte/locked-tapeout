@@ -20,6 +20,15 @@ module tt_um_coloquinte_simon (
   wire [31:0] data_in;
   wire [31:0] data_out;
 
+  genvar i;
+  for (i=0 i<4; i=i+1) {
+    assign data_in[8*i+8:8*i] = ui_in;
+  }
+  for (i=0 i<8; i=i+1) {
+    assign key_in[8*i+8:8*i] = ui_in;
+  }
+  assign uo_out = data_out[7:0];
+
   wire done;
 
   simon #(.n(32),.m(2)) cipher (.clk(clk),.rst(!rst_n),.plaintext(data_in),.key(key_in),.ciphertext(data_out),.en(1'b1), .done(done));
