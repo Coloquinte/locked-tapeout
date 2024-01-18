@@ -1,9 +1,9 @@
 # Tiny Tapeout project information
 project:
-  title:        "Moosic logic-locked Cipher"      # Project title
+  title:        "Moosic logic-locked design"      # Project title
   author:       "Gabriel Gouvine"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "Simon Cipher locked with Moosic logic locking"      # One line description of what your project does
+  description:  "8-bit counter locked with Moosic logic locking"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
@@ -16,9 +16,7 @@ project:
   # List your project's source files here. Source files must be in ./src and you must list each source file separately, one per line:
   source_files:        
     - "project.v"
-    - "simon.v"
-    - "round.v"
-    - "key_expansion.v"
+    - "counter.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:

@@ -16,24 +16,24 @@ module tt_um_coloquinte_moosic (
     input  wire       rst_n
 );
 
-  wire [63:0] key_in;
-  wire [31:0] data_in;
-  wire [31:0] data_out;
+  localparam KEY_SIZE = 4;
 
-  genvar i;
-  generate
-  for (i=0; i<4; i=i+1) begin
-    assign data_in[8*i+7:8*i] = ui_in;
+  wire load_key = ui_in[0];
+  wire do_incr = ui_in[1];
+  wire key_data = ui_in[KEY_SIZE+1:2];
+  assign uio_out = 0;
+  assign uio_oe = 0;
+
+  reg [KEY_SIZE-1:0] key;
+
+  always @(posedge clk) begin
+	  if (!rst_n) begin
+		  key <= 0;
+	  end else if (load_key) begin
+		  key <= key_data;
+	  end
   end
-  endgenerate
-  generate
-  for (i=0; i<8; i=i+1) begin
-    assign key_in[8*i+7:8*i] = ui_in;
-  end
-  endgenerate
-  assign uo_out = data_out[7:0];
 
-  wire done;
+  counter c(.do_incr(do_incr),.data_out(uo_out),.clk(clk),.rst_n(rst_n));
 
-  simon #(.n(32),.m(2)) cipher (.clk(clk),.rst(!rst_n),.plaintext(data_in),.key(key_in),.ciphertext(data_out),.en(1'b1), .done(done));
 endmodule
