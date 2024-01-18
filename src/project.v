@@ -34,6 +34,6 @@ module tt_um_coloquinte_moosic (
 	  end
   end
 
-  counter c(.do_incr(do_incr),.data_out(uo_out),.clk(clk),.rst_n(rst_n));
+  locked_counter c(.do_incr(do_incr),.data_out(uo_out),.clk(clk),.rst_n(rst_n),.moosic_key(key));
 
 endmodule
