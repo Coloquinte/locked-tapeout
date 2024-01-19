@@ -6,12 +6,15 @@ This requires a great deal of trust in the toolchain and the foundry: a maliciou
 For security-conscious designers, countermeasures are necessary.
 
 One such countermeasure is logic locking: we are going to lock our design, so that it does not work without a secret key.
-We do it by adding new gates that use the key: if the key is incorrect, the design behaviour will be completely modified.
+We do it by adding or changing some gates in the design to use the key: if the key is incorrect, the design behaviour will be completely modified.
 This is going to make it harder to reuse the design without authorization (you have to find the key) or to introduce backdoors (you have to understand what it does).
-We built a yosys plugin [to do just that](https://github.com/Coloquinte/moosic-yosys-plugin).
-To illustrate, let's make a design on [TinyTapeout](https://tinytapeout.com/), lock it and synthetize it all the way to silicon.
 
 ![My Image](XOR_NXOR_insertion.svg)
+
+We built a yosys plugin [to do just that](https://github.com/Coloquinte/moosic-yosys-plugin).
+The plugin provides a `logic_locking` command that will mangle the design as much as it can.
+
+To illustrate, let's make a design on [TinyTapeout](https://tinytapeout.com/), lock it and synthetize it all the way to silicon.
 
 ## Locking a TinyTapeout design
 
@@ -63,5 +66,7 @@ We still have to make a wrapper for TinyTapeout, to get the key in... and test t
 The [main project file](https://github.com/Coloquinte/locked-tapeout/blob/main/src/project.v) will be responsible for loading the key from the external inputs
 The [testbench file](https://github.com/Coloquinte/locked-tapeout/blob/main/test/test.py) checks that our counter behaves as expected... and is indeed broken with the wrong key.
 
-The TinyTapeout project is available [here](https://github.com/Coloquinte/locked-tapeout).
+And finally we have the full tapeout! The code for the TinyTapeout project is available [here](https://github.com/Coloquinte/locked-tapeout).
 If you want to go further, have a look at [the project page](https://github.com/Coloquinte/moosic-yosys-plugin) or [our Free Silicon Conference presentation](https://peertube.f-si.org/videos/watch/7f250190-6d8f-4a67-8ed6-d07deda7fba0).
+For power users, there are a lot of additional options to pick your security metrics, or to balance security and performance.
+Logic locking is an active area of research, and we are happy to provide an open-source tool to apply it to your designs.
