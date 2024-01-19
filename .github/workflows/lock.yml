@@ -1,0 +1,46 @@
+name: lock
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: sudo apt-get install tcl-dev libreadline-dev libffi-dev pkg-config python3 libboost-system-dev libboost-python-dev libboost-filesystem-dev zlib1g-dev xz-utils valgrind
+
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+
+    - name: Install yosys
+      run: |
+        git clone https://github.com/YosysHQ/yosys; \
+        cd yosys; make config-gcc; \
+        make -j2 ENABLE_CCACHE=1 ; \
+        sudo make install; cd ..
+
+    - name: Install the plugin
+      run: |
+        git clone https://github.com/Coloquinte/moosic-yosys-plugin; \
+        cd moosic-yosys-plugin; \
+        make -j2 ENABLE_WERROR=1; sudo make install; cd ..
+
+    - name: Lock the design
+      run: yosys -m moosic -p "read_verilog src/counter.v; synth; logic_locking -key-bits 6 -key 39; write_verilog src/locked_counter.v"
+
+    - name: Upload the locked design
+      uses: actions/upload-artifact@v3
+      with:
+        name: locked_counter.v
+        path: src/locked_counter.v
