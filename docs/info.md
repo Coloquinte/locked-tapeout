@@ -9,12 +9,15 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+This is a simple counter that is incremented every time the first input bit is set.
+
+The trick is that is it locked using logic locking, so that it won't work unless the proper key is set first.
 
 ## How to test
 
-Explain how to use your project
+You need to initialize the key with inputs "11100110" (or 0xe6). The 6 most significant bits (111001) are the key, and the second bit is the key enable.
+Then you can run the counter: "00000001" will increment it, while "00000000" will keep the same value.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+This is purely self-contained to demonstrate logic locking.
