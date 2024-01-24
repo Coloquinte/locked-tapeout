@@ -71,7 +71,7 @@ We are going to keep it simple and read the key directly from the primary inputs
 
 To make sure it all works, we write a [testbench](https://github.com/Coloquinte/locked-tapeout/blob/main/test/test.py) that checks that our counter behaves as expected... and is indeed broken with the wrong key.
 
-And finally we have the full tapeout! The code for the TinyTapeout project is available [here](https://github.com/Coloquinte/locked-tapeout).
+And finally we have the full mask design! The code for the TinyTapeout project is available [here](https://github.com/Coloquinte/locked-tapeout), and our locked counter will hopefully be on the TT06 chip when it tapes out.
 If you want to go further, have a look at [the project page](https://github.com/Coloquinte/moosic-yosys-plugin) or [our Free Silicon Conference presentation](https://peertube.f-si.org/videos/watch/7f250190-6d8f-4a67-8ed6-d07deda7fba0).
 For power users, the plugin provides a lot of additional options to pick your security metrics, or to balance security and performance.
 Logic locking is an active area of research, and we are happy to provide an open-source tool to apply it to your designs.
