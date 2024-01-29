@@ -21,22 +21,26 @@ To illustrate, let's make a design on [TinyTapeout](https://tinytapeout.com/), l
 The goal of logic locking is to make the design unusable without the right key.
 Usually, we apply it after synthesis, when the design is already mapped to logic gates.
 Logic locking adds new gates that are not supposed to do anything, but change the behaviour of the design.
-Our tool does it by adding Xor gates, as shown below, but you can imagine a lot of ways to insert or replace gates, as long as the design works correctly when the right key is given.
+Our tool does it by adding Xor and Xnor gates, as shown below, but you can imagine a lot of ways to insert or replace gates.
+If the right key is provided (0 for a Xor gate, 1 for a Xnor gate), the design works as before.
+It acts as a countermeasure rather than a cryptographic security.
+Much like software countermeasures it will not stop a determined attacker with unlimited resources, but it's one more thing that an attacker will have to break.
 
 ![Xor insertion](XOR_NXOR_insertion.svg)
 
 The logic locking tool needs to decide where to insert the gates.
 Its goal is to disrupt the design as much as possible, and ideally make the key hard to guess by running and analyzing the design.
-The tool will analyze the impact of inserting a locking gate, and pick the places that maximize its estimated security.
+The tool will analyze the impact of inserting a locking gate, and pick the places that maximize its estimated security, typically signals that have a large impact on the design's behaviour.
 Ultimately, it's a tradeoff between security and performance: the more gates you insert the better.
 
-The plugin provides options to explore the effect of logic locking on performance. We are not going to use these here, and keep to the default options.
-In practice, just a few gates is enough to break the design almost completely.
-
+Just a few percents of the gates locked is almost always enough to completely corrupt the design.
+We can explore the tradeoff with the plugin.
+For example, on this benchmark, locking just 13% of the signals breaks all outputs and all testcases:
+![Corruptibility](pareto_front.png)
 
 ## Locking a design
 
-Let's start with a toy design. This is a counter, that is incremented at each clock cycle where `do_incr` is set:
+We are going to make a toy design to experiment with logic locking. I wrote a counter, that is incremented at each clock cycle where `do_incr` is set:
 ```verilog
 module counter (
     input wire do_incr,
