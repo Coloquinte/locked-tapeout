@@ -20,9 +20,9 @@ To illustrate, let's make a design on [TinyTapeout](https://tinytapeout.com/), l
 
 The goal of logic locking is to make the design unusable without the right key.
 Usually, we apply it after synthesis, when the design is already mapped to logic gates.
-Logic locking adds new gates that are not supposed to do anything, but change the behaviour of the design.
+Logic locking adds new gates that will change the behaviour of the design unless the right key is provided.
 Our tool does it by adding Xor and Xnor gates, as shown below, but you can imagine a lot of ways to insert or replace gates.
-If the right key is provided (0 for a Xor gate, 1 for a Xnor gate), the design works as before.
+If a 0 is set for a Xor gate, or a 1 for a Xnor gate, the design works as before.
 It acts as a countermeasure rather than a cryptographic security.
 Much like software countermeasures it will not stop a determined attacker with unlimited resources, but it's one more thing that an attacker will have to break.
 
@@ -31,7 +31,7 @@ Much like software countermeasures it will not stop a determined attacker with u
 The logic locking tool needs to decide where to insert the gates.
 Its goal is to disrupt the design as much as possible, and ideally make the key hard to guess by running and analyzing the design.
 The tool will analyze the impact of inserting a locking gate, and pick the places that maximize its estimated security, typically signals that have a large impact on the design's behaviour.
-Ultimately, it's a tradeoff between security and performance: the more gates you insert the better.
+Ultimately, it's a tradeoff between security and performance: for security, the more gates you insert the better, but this makes the circuit bigger and slower.
 
 Just a few percents of the gates locked is almost always enough to completely corrupt the design.
 We can explore the tradeoff with the plugin.
