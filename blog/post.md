@@ -9,12 +9,30 @@ One such countermeasure is logic locking: we are going to lock our design, so th
 We do it by adding or changing some gates in the design to use the key: if the key is incorrect, the design behaviour will be completely modified.
 This is going to make it harder to reuse the design without authorization (you have to find the key) or to introduce backdoors (you have to understand what it does).
 
-![My Image](XOR_NXOR_insertion.svg)
+![My Image](locking.svg)
 
 We built a Yosys plugin [to do just that](https://github.com/Coloquinte/moosic-yosys-plugin).
 The plugin provides a `logic_locking` command that will mangle the design as much as it can.
 
 To illustrate, let's make a design on [TinyTapeout](https://tinytapeout.com/), lock it and synthetize it all the way to silicon.
+
+## What is logic locking
+
+The goal of logic locking is to make the design unusable without the right key.
+Usually, we apply it after synthesis, when the design is already mapped to logic gates.
+Logic locking adds new gates that are not supposed to do anything, but change the behaviour of the design.
+Our tool does it by adding Xor gates, as shown below, but you can imagine a lot of ways to insert or replace gates, as long as the design works correctly when the right key is given.
+
+![Xor insertion](XOR_NXOR_insertion.svg)
+
+The logic locking tool needs to decide where to insert the gates.
+Its goal is to disrupt the design as much as possible, and ideally make the key hard to guess by running and analyzing the design.
+The tool will analyze the impact of inserting a locking gate, and pick the places that maximize its estimated security.
+Ultimately, it's a tradeoff between security and performance: the more gates you insert the better.
+
+The plugin provides options to explore the effect of logic locking on performance. We are not going to use these here, and keep to the default options.
+In practice, just a few gates is enough to break the design almost completely.
+
 
 ## Locking a design
 
@@ -46,7 +64,7 @@ read_verilog src/counter.v
 synth
 ```
 
-Now we apply locking and save our netlist. To fit in our 8-bit input port, I picked a small 6-bit key. Make it a lot bigger if you use it in the wild! And don't lose the key.
+Now we apply locking and save our netlist. To fit in our 8-bit input port, I picked a small 6-bit key. With only 64 possible values, it is easy to brute-force, so make it a lot bigger if you use it in the wild! And don't lose the key.
 ```tcl
 logic_locking -key-bits 6 -key 39
 write_verilog src/locked_counter.v
