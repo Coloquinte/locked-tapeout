@@ -9,6 +9,6 @@ We wrote a Yosys plugin, [Moosic](https://github.com/Coloquinte/moosic-yosys-plu
 
 This is a showcase design to show how to apply logic locking on a simple example.
 It uses [TinyTapeout](https://tinytapeout.com/) to go all the way to a silicon chip!
-Have a look at the [blog post](blog/post.md) for more information.
+Have a look at the [blog post](https://blog.yosyshq.com/p/logic-locking-with-moosic/) on the YosysHQ blog for more information.
 
 - [Read the documentation](docs/info.md)
